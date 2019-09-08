@@ -21,47 +21,47 @@
 /**
  * Turns the left indicator on.
  */
-void led_indicate_left_on();
+void led_indicate_left_on(void);
 
 /**
  * Turns the left indicator off.
  */
-void led_indicate_left_off();
+void led_indicate_left_off(void);
 
 /**
  * Returns true if the left indicator is on.
  */
-bool led_is_indicate_left_on();
+bool led_is_indicate_left_on(void);
 
 /**
  * Turns the right indicator on.
  */
-void led_indicate_right_on();
+void led_indicate_right_on(void);
 
 /**
  * Turns the right indicator off.
  */
-void led_indicate_right_off();
+void led_indicate_right_off(void);
 
 /**
  * Returns true if the right indicator is on.
  */
-bool led_is_indicate_right_on();
+bool led_is_indicate_right_on(void);
 
 /**
  * Turns the brakelight on.
  */
-void led_brakelight_on();
+void led_brakelight_on(void);
 
 /**
  * Turns the brakelight off.
  */
-void led_brakelight_off();
+void led_brakelight_off(void);
 
 /**
  * Returns true if the brakelight is on.
  */
-bool led_is_brakelight_on();
+bool led_is_brakelight_on(void);
 
 /**
  * Turns the headlight on.

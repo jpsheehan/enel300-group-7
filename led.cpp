@@ -31,7 +31,7 @@ static const int indicate_right_pins[PINS_INDICATE_RIGHT_LEN] = { PINS_INDICATE_
 
 static unsigned long last_update = 0;
 
-void led_indicate_left_on()
+void led_indicate_left_on(void)
 {
   if (indicate_left == false) {
     indicate_left_changed = true;
@@ -39,7 +39,7 @@ void led_indicate_left_on()
   indicate_left = true;
 }
 
-void led_indicate_left_off()
+void led_indicate_left_off(void)
 {
   if (indicate_left == true) {
     indicate_left_changed = true;
@@ -47,12 +47,12 @@ void led_indicate_left_off()
   indicate_left = false;
 }
 
-bool led_is_indicate_left_on()
+bool led_is_indicate_left_on(void)
 {
   return indicate_left;
 }
 
-void led_indicate_right_on()
+void led_indicate_right_on(void)
 {
   if (indicate_right == false) {
     indicate_right_changed = true;
@@ -60,7 +60,7 @@ void led_indicate_right_on()
   indicate_right = true;
 }
 
-void led_indicate_right_off()
+void led_indicate_right_off(void)
 {
   if (indicate_right == true) {
     indicate_right_changed = true;
@@ -68,12 +68,12 @@ void led_indicate_right_off()
   indicate_right = false;
 }
 
-bool led_is_indicate_right_on()
+bool led_is_indicate_right_on(void)
 {
   return indicate_right;
 }
 
-void led_brakelight_on()
+void led_brakelight_on(void)
 {
   if (brakelight == false) {
     brakelight_changed = true;
@@ -81,7 +81,7 @@ void led_brakelight_on()
   brakelight = true;
 }
 
-void led_brakelight_off()
+void led_brakelight_off(void)
 {
   if (brakelight == true) {
     brakelight_changed = true;
@@ -89,12 +89,12 @@ void led_brakelight_off()
   brakelight = false;
 }
 
-bool led_is_brakelight_on()
+bool led_is_brakelight_on(void)
 {
   return brakelight;
 }
 
-void led_headlight_on()
+void led_headlight_on(void)
 {
   if (headlight == false) {
     headlight_changed = true;
@@ -102,7 +102,7 @@ void led_headlight_on()
   headlight = true;
 }
 
-void led_headlight_off()
+void led_headlight_off(void)
 {
   if (headlight == true) {
     headlight_changed = true;
@@ -110,12 +110,12 @@ void led_headlight_off()
   headlight = false;
 }
 
-bool led_is_headlight_on()
+bool led_is_headlight_on(void)
 {
   return headlight;
 }
 
-void led_update()
+void led_update(void)
 {
   int i;
   unsigned long now, diff;
@@ -159,7 +159,7 @@ void led_update()
   last_update = now;
 }
 
-void led_init()
+void led_init(void)
 {
   int i;
 

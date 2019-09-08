@@ -20,7 +20,11 @@ void setup() {
   utils_init();
 }
 
-void loop() {
+/**
+ * Blinks each bank of leds on and off individually.
+ */
+void led_test_one(void)
+{
   led_indicate_left_on();
   delay(500);
   led_indicate_left_off();
@@ -42,4 +46,8 @@ void loop() {
   delay(500);
   led_indicate_right_off();
   delay(500);
+}
+
+void loop() {
+  led_test_one();
 }

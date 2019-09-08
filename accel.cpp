@@ -4,7 +4,7 @@
 #include "accel.h"
 #include "hardware.h"
 
-void accel_init()
+void accel_init(void)
 {
   Wire.begin();
 }

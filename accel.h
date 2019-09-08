@@ -4,6 +4,6 @@
 /**
  * Initialises the accelerometer.
  */
-void accel_init();
+void accel_init(void);
 
 #endif
