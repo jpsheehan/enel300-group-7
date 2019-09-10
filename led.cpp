@@ -4,7 +4,8 @@
 
 #define LED_HIGH (mosfet_type == LED_NMOS ? HIGH : LOW)
 #define LED_LOW  (mosfet_type == LED_NMOS ? LOW : HIGH)
-#define LED_PWM_OUTPUT(var) ((var && (timer_count % 2 == 0)) ? LED_HIGH : LED_LOW)
+#define LED_PWM_OUTPUT(var) (((var) && (timer_count % 2 == 0)) ? LED_HIGH : LED_LOW)
+//#define LED_PWM_OUTPUT_PULSE(var, pulse) (((var) && (pulse) && (timer_count % 2 == 0)) ? LED_HIGH : LED_LOW)
 
 /**
  * LIGHT FLAGS:
@@ -13,6 +14,20 @@ static bool indicate_left = false;
 static bool indicate_right = false;
 static bool brakelight = false;
 static bool headlight = false;
+
+/**
+ * PULSE FLAGS:
+ */
+//static bool indicate_pulse = false;
+//static bool headlight_pulse = false;
+//static bool brakelight_pulse = false;
+
+/**
+ * PULSE FREQUENCIES:
+ */
+//static const int indicate_freq = 2;
+//static const int brakelight_freq = 5;
+//static const int headlight_freq = 5;
 
 /**
  * LIGHT CHANGED FLAGS:
@@ -30,17 +45,25 @@ static const int brakelight_pins[PINS_BRAKELIGHT_LEN] = { PINS_BRAKELIGHT };
 static const int indicate_left_pins[PINS_INDICATE_LEFT_LEN] = { PINS_INDICATE_LEFT };
 static const int indicate_right_pins[PINS_INDICATE_RIGHT_LEN] = { PINS_INDICATE_RIGHT };
 
+/**
+ * ISR PWM STUFF:
+ */
 // if the prescaler or the frequency changes, you will need to change the led_pwm_value
 // if the prescaler changes, you must change the related line in led_init
 static const int led_pwm_freq = 50; // Hz (the actual timer frequency will be twice this)
 static const int led_pwm_prescaler = 64;
 static const int led_pwm_value = 2500; // = F_CPU / (led_pwm_freq * led_pwm_prescaler * 2)
 
+/**
+ * PULSE START VARIABLES:
+ */
+//static unsigned long indicate_pulse_start;
+//static unsigned long brakelight_pulse_start;
+//static unsigned long headlight_pulse_start;
+
 static led_mosfet_type mosfet_type;
 
-static int timer_count = 0;
-
-//static int indicate_frequency = 2;
+static unsigned long timer_count = 0;
 
 void led_indicate_left_on(void)
 {
@@ -130,7 +153,16 @@ ISR(TIMER1_COMPA_vect)
 {
   int i;
 
-//  Serial.println(timer_count);
+  // handle the pulse stuff
+//  if (brakelight) {
+//    if (brakelight_changed) {
+//      brakelight_pulse_start = timer_count;
+//    } else {
+//       if (((timer_count - brakelight_pulse_start) % (2 * brakelight_freq)) == 0) {
+//        brakelight_pulse = !brakelight_pulse;
+//      }
+//    }
+//  }
   
   // handle the headlight pins
   if (headlight_changed || headlight) {
@@ -164,7 +196,7 @@ ISR(TIMER1_COMPA_vect)
     indicate_right_changed = false;
   }
 
-  timer_count = (timer_count + 1) % led_pwm_value;
+  timer_count++;
 }
 
 void led_init(led_mosfet_type type)
@@ -206,3 +238,8 @@ void led_init(led_mosfet_type type)
   
   interrupts();
 }
+
+// undefine the macros so we don't pollute the macro table
+#undef LED_PWM_OUTPUT
+#undef LED_LOW
+#undef LED_HIGH
