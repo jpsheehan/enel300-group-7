@@ -2,6 +2,9 @@
 
 #include "led.h"
 
+#define LED_HIGH (mosfet_type == LED_NMOS ? HIGH : LOW)
+#define LED_LOW  (mosfet_type == LED_NMOS ? LOW : HIGH)
+
 /**
  * LIGHT FLAGS:
  */
@@ -25,6 +28,8 @@ static const int headlight_pins[PINS_HEADLIGHT_LEN] = { PINS_HEADLIGHT };
 static const int brakelight_pins[PINS_BRAKELIGHT_LEN] = { PINS_BRAKELIGHT };
 static const int indicate_left_pins[PINS_INDICATE_LEFT_LEN] = { PINS_INDICATE_LEFT };
 static const int indicate_right_pins[PINS_INDICATE_RIGHT_LEN] = { PINS_INDICATE_RIGHT };
+
+static led_mosfet_type mosfet_type;
 
 //static int indicate_frequency = 2;
 //static int indicate_duty_cycle = 50;
@@ -127,7 +132,7 @@ void led_update(void)
   // handle the headlight pins
   if (headlight_changed) {
     for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
-      digitalWrite(headlight_pins[i], headlight ? HIGH : LOW);
+      digitalWrite(headlight_pins[i], headlight ? LED_HIGH : LED_LOW);
     }
     headlight_changed = false;
   }
@@ -135,7 +140,7 @@ void led_update(void)
   // handle the brakelight pins
   if (brakelight_changed) {
     for (i = 0; i < PINS_BRAKELIGHT_LEN; i++) {
-      digitalWrite(brakelight_pins[i], brakelight ? HIGH : LOW);
+      digitalWrite(brakelight_pins[i], brakelight ? LED_HIGH : LED_LOW);
     }
     brakelight_changed = false;
   }
@@ -143,7 +148,7 @@ void led_update(void)
   // TODO: handle the indicate left pin frequency and duty cycle
   if (indicate_left_changed) {
     for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {
-      digitalWrite(indicate_left_pins[i], indicate_left ? HIGH : LOW);
+      digitalWrite(indicate_left_pins[i], indicate_left ? LED_HIGH : LED_LOW);
     }
     indicate_left_changed = false;
   }
@@ -151,7 +156,7 @@ void led_update(void)
   // TODO: handle the indicate right pin frequency and duty cycle
   if (indicate_right_changed) {
     for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
-      digitalWrite(indicate_right_pins[i], indicate_right ? HIGH : LOW);
+      digitalWrite(indicate_right_pins[i], indicate_right ? LED_HIGH : LED_LOW);
     }
     indicate_right_changed = false;
   }
@@ -159,9 +164,11 @@ void led_update(void)
   last_update = now;
 }
 
-void led_init(void)
+void led_init(led_mosfet_type type)
 {
   int i;
+
+  mosfet_type = type;
 
   // initialise left indicator pins
   for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {

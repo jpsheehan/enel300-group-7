@@ -16,7 +16,7 @@
 
 void setup() {
   accel_init();
-  led_init();
+  led_init(LED_NMOS);
   utils_init();
 }
 

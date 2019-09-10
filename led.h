@@ -18,6 +18,11 @@
 #define PINS_BRAKELIGHT           PINS_HEADLIGHT
 #define PINS_BRAKELIGHT_LEN       PINS_HEADLIGHT_LEN
 
+typedef enum {
+  LED_NMOS,
+  LED_PMOS
+} led_mosfet_type;
+
 /**
  * Turns the left indicator on.
  */
@@ -87,6 +92,6 @@ void led_update();
 /**
  * Initialises the LED hardware.
  */
-void led_init();
+void led_init(led_mosfet_type t);
 
 #endif
