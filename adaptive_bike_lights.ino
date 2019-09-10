@@ -26,25 +26,33 @@ void setup() {
 void led_test_one(void)
 {
   led_indicate_left_on();
+  led_update();
   delay(500);
   led_indicate_left_off();
+  led_update();
   delay(500);
 
   if (utils_is_front_module()) {
     led_headlight_on();
+    led_update();
     delay(500);
     led_headlight_off();
+    led_update();
     delay(500);
   } else {
     led_brakelight_on();
+    led_update();
     delay(500);
     led_brakelight_off();
+    led_update();
     delay(500);
   }
   
   led_indicate_right_on();
+  led_update();
   delay(500);
   led_indicate_right_off();
+  led_update();
   delay(500);
 }
 
