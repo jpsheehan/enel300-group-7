@@ -4,6 +4,7 @@
 
 #define LED_HIGH (mosfet_type == LED_NMOS ? HIGH : LOW)
 #define LED_LOW  (mosfet_type == LED_NMOS ? LOW : HIGH)
+#define LED_PWM_OUTPUT(var) ((var && (timer_count % 2 == 0)) ? LED_HIGH : LED_LOW)
 
 /**
  * LIGHT FLAGS:
@@ -29,12 +30,17 @@ static const int brakelight_pins[PINS_BRAKELIGHT_LEN] = { PINS_BRAKELIGHT };
 static const int indicate_left_pins[PINS_INDICATE_LEFT_LEN] = { PINS_INDICATE_LEFT };
 static const int indicate_right_pins[PINS_INDICATE_RIGHT_LEN] = { PINS_INDICATE_RIGHT };
 
+// if the prescaler or the frequency changes, you will need to change the led_pwm_value
+// if the prescaler changes, you must change the related line in led_init
+static const int led_pwm_freq = 50; // Hz (the actual timer frequency will be twice this)
+static const int led_pwm_prescaler = 64;
+static const int led_pwm_value = 2500; // = F_CPU / (led_pwm_freq * led_pwm_prescaler * 2)
+
 static led_mosfet_type mosfet_type;
 
-//static int indicate_frequency = 2;
-//static int indicate_duty_cycle = 50;
+static int timer_count = 0;
 
-static unsigned long last_update = 0;
+//static int indicate_frequency = 2;
 
 void led_indicate_left_on(void)
 {
@@ -120,48 +126,45 @@ bool led_is_headlight_on(void)
   return headlight;
 }
 
-void led_update(void)
+ISR(TIMER1_COMPA_vect)
 {
   int i;
-  unsigned long now, diff;
 
-  // get some time information (needed for frequency/duty cycle calculations)
-  now = millis();
-  diff = now - last_update;
-
+//  Serial.println(timer_count);
+  
   // handle the headlight pins
-  if (headlight_changed) {
+  if (headlight_changed || headlight) {
     for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
-      digitalWrite(headlight_pins[i], headlight ? LED_HIGH : LED_LOW);
+      digitalWrite(headlight_pins[i], LED_PWM_OUTPUT(headlight));
     }
     headlight_changed = false;
   }
 
   // handle the brakelight pins
-  if (brakelight_changed) {
+  if (brakelight_changed || brakelight) {
     for (i = 0; i < PINS_BRAKELIGHT_LEN; i++) {
-      digitalWrite(brakelight_pins[i], brakelight ? LED_HIGH : LED_LOW);
+      digitalWrite(brakelight_pins[i], LED_PWM_OUTPUT(brakelight));
     }
     brakelight_changed = false;
   }
 
   // TODO: handle the indicate left pin frequency and duty cycle
-  if (indicate_left_changed) {
+  if (indicate_left_changed || indicate_left) {
     for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {
-      digitalWrite(indicate_left_pins[i], indicate_left ? LED_HIGH : LED_LOW);
+      digitalWrite(indicate_left_pins[i], LED_PWM_OUTPUT(indicate_left));
     }
     indicate_left_changed = false;
   }
 
   // TODO: handle the indicate right pin frequency and duty cycle
-  if (indicate_right_changed) {
+  if (indicate_right_changed || indicate_right) {
     for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
-      digitalWrite(indicate_right_pins[i], indicate_right ? LED_HIGH : LED_LOW);
+      digitalWrite(indicate_right_pins[i], LED_PWM_OUTPUT(indicate_right));
     }
     indicate_right_changed = false;
   }
 
-  last_update = now;
+  timer_count = (timer_count + 1) % led_pwm_value;
 }
 
 void led_init(led_mosfet_type type)
@@ -189,4 +192,17 @@ void led_init(led_mosfet_type type)
   for (i = 0; i < PINS_BRAKELIGHT_LEN; i++) {
     pinMode(brakelight_pins[i], OUTPUT);
   }
+
+  // initialise the ISR
+  noInterrupts();
+
+  TCCR1A = 0;
+  TCCR1B = 0;
+  TCNT1 = 0;
+  OCR1A = led_pwm_value;
+  TCCR1B |= (1 << WGM12);
+  TCCR1B |= (1 << CS11) | (1 << CS10); // prescaler of 64
+  TIMSK1 |= (1 << OCIE1A);  
+  
+  interrupts();
 }

@@ -84,12 +84,6 @@ void led_headlight_off();
 bool led_is_headlight_on();
 
 /**
- * Updates the LED hardware.
- * Should be called as often as you want to enact changes.
- */
-void led_update();
-
-/**
  * Initialises the LED hardware.
  */
 void led_init(led_mosfet_type t);

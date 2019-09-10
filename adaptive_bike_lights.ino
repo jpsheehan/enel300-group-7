@@ -15,6 +15,7 @@
 #include "utils.h"
 
 void setup() {
+//  Serial.begin(9600);
   accel_init();
   led_init(LED_NMOS);
   utils_init();
@@ -25,35 +26,49 @@ void setup() {
  */
 void led_test_one(void)
 {
-  led_indicate_left_on();
-  led_update();
-  delay(500);
-  led_indicate_left_off();
-  led_update();
-  delay(500);
+  static unsigned long then = 0;
+  unsigned long now = millis();
+  unsigned long diff = now - then;
 
-  if (utils_is_front_module()) {
-    led_headlight_on();
-    led_update();
-    delay(500);
-    led_headlight_off();
-    led_update();
-    delay(500);
-  } else {
-    led_brakelight_on();
-    led_update();
-    delay(500);
-    led_brakelight_off();
-    led_update();
-    delay(500);
+  if (diff > 3000) {
+    then = now;
+    return;
+  }
+
+  if (diff > 2500) {
+    led_indicate_right_off();
+    return;
+  }
+  if (diff > 2000) {
+    led_indicate_right_on();
+    return;
+  }
+
+  if (diff > 1500) {
+    if (utils_is_front_module()) {
+        led_headlight_off();
+    } else {
+        led_brakelight_off();
+    }
+    return;
+  }
+
+  if (diff > 1000) {
+    if (utils_is_front_module()) {
+        led_headlight_on();
+    } else {
+        led_brakelight_on();
+    }
+    return;
   }
   
-  led_indicate_right_on();
-  led_update();
-  delay(500);
-  led_indicate_right_off();
-  led_update();
-  delay(500);
+  if (diff > 500) {
+    led_indicate_left_off();
+    return;
+  } else {
+    led_indicate_left_on();
+    return;
+  }
 }
 
 void loop() {
