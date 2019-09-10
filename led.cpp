@@ -65,6 +65,45 @@ static led_mosfet_type mosfet_type;
 
 static unsigned long timer_count = 0;
 
+void led_knightrider(int delay_ms)
+{  
+  int i;
+  
+  // left to right
+  for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {
+    digitalWrite(indicate_left_pins[i], LED_HIGH);
+    delay(delay_ms);
+    digitalWrite(indicate_left_pins[i], LED_LOW);
+  }
+  for (i = 0; i < PINS_BRAKELIGHT_LEN; i++) {
+    digitalWrite(brakelight_pins[i], LED_HIGH);
+    delay(delay_ms);
+    digitalWrite(brakelight_pins[i], LED_LOW);
+  }
+  for (i = 0; i < PINS_INDICATE_RIGHT_LEN - 1; i++) {
+    digitalWrite(indicate_right_pins[i], LED_HIGH);
+    delay(delay_ms);
+    digitalWrite(indicate_right_pins[i], LED_LOW);
+  }
+
+  // right to left
+  for (i = PINS_INDICATE_RIGHT_LEN - 1; i >= 0; --i) {
+    digitalWrite(indicate_right_pins[i], LED_HIGH);
+    delay(delay_ms);
+    digitalWrite(indicate_right_pins[i], LED_LOW);
+  }
+  for (i = PINS_BRAKELIGHT_LEN - 1; i >= 0; --i) {
+    digitalWrite(brakelight_pins[i], LED_HIGH);
+    delay(delay_ms);
+    digitalWrite(brakelight_pins[i], LED_LOW);
+  }
+  for (i = PINS_INDICATE_LEFT_LEN - 2; i >= 0; --i) {
+    digitalWrite(indicate_left_pins[i], LED_HIGH);
+    delay(delay_ms);
+    digitalWrite(indicate_left_pins[i], LED_LOW);
+  }
+}
+
 void led_indicate_left_on(void)
 {
   if (indicate_left == false) {

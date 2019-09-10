@@ -1,6 +1,8 @@
 #ifndef LED_H_
 #define LED_H_
 
+#include <stdbool.h>
+
 #include "hardware.h"
 
 /**
@@ -87,5 +89,10 @@ bool led_is_headlight_on();
  * Initialises the LED hardware.
  */
 void led_init(led_mosfet_type t);
+
+/**
+ * You know what this does.
+ */
+void led_knightrider(int delay_ms);
 
 #endif
