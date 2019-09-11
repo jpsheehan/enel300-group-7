@@ -23,5 +23,5 @@ void setup() {
 }
 
 void loop() {
-  led_test_five();
+  led_test_six();
 }

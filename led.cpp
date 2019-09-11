@@ -278,6 +278,28 @@ void led_init(led_mosfet_type type)
   interrupts();
 }
 
+void led_force_all_on(bool is_rear)
+{
+  int i;
+  for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
+    digitalWrite(headlight_pins[i], LED_HIGH);
+  }
+
+  if (is_rear) {
+    for (i = 0; i < PINS_BRAKELIGHT_LEN; i++) {
+      digitalWrite(brakelight_pins[i], LED_HIGH);
+    }
+  } else {
+    for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {
+      digitalWrite(indicate_left_pins[i], LED_HIGH);
+    }
+  }
+
+  for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
+    digitalWrite(indicate_right_pins[i], LED_HIGH);
+  }
+}
+
 // undefine the macros so we don't pollute the macro table
 #undef LED_PWM_OUTPUT
 #undef LED_LOW

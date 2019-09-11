@@ -26,4 +26,9 @@ void led_test_four(void);
  */
 void led_test_five(void);
 
+/**
+ * Full on, 100% duty.
+ */
+void led_test_six(void);
+
 #endif

@@ -95,4 +95,9 @@ void led_init(led_mosfet_type t);
  */
 void led_knightrider(int delay_ms);
 
+/**
+ * Forces all LEDs on with 100% duty.
+ */
+void led_force_all_on(bool is_rear);
+
 #endif
