@@ -18,10 +18,10 @@
 
 void setup() {
   accel_init();
-  led_init(LED_NMOS);
+  led_init(LED_PMOS);
   utils_init();
 }
 
 void loop() {
-  led_test_four();
+  led_test_five();
 }

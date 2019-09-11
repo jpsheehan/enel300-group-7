@@ -76,3 +76,18 @@ void led_test_four(void)
 {
   while (true) { led_knightrider(100); }
 }
+
+void led_test_five(void)
+{
+  while (true) {
+    if (utils_is_rear_module()) {
+      led_brakelight_on();
+      led_indicate_left_off();
+      led_indicate_right_off();
+    } else {
+      led_brakelight_off();
+      led_indicate_right_on();
+      led_indicate_left_on();
+    }
+  }
+}

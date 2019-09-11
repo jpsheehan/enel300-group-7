@@ -21,4 +21,9 @@ void led_test_three(void);
 */
 void led_test_four(void); 
 
+/**
+ * Tests the is rear? jumper
+ */
+void led_test_five(void);
+
 #endif

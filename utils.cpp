@@ -5,12 +5,12 @@
 
 bool utils_is_rear_module(void)
 {
-  return ~digitalRead(PIN_IS_REAR);
+  return digitalRead(PIN_IS_REAR) == LOW;
 }
 
 bool utils_is_front_module(void)
 {
-  return digitalRead(PIN_IS_REAR);
+  return digitalRead(PIN_IS_REAR) == HIGH;
 }
 
 void utils_init(void)
