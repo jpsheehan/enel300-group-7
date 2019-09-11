@@ -94,7 +94,7 @@ void led_test_five(void)
 
 void led_test_six(void)
 {
-  led_force_all_on(utils_is_rear_module());
+  led_force_all_on();
   
   while (true) {
     continue;

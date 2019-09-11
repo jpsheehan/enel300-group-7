@@ -98,6 +98,11 @@ void led_knightrider(int delay_ms);
 /**
  * Forces all LEDs on with 100% duty.
  */
-void led_force_all_on(bool is_rear);
+void led_force_all_on();
+
+/**
+ * Forces all LEDs off.
+ */
+void led_force_all_off();
 
 #endif

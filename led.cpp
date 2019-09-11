@@ -1,6 +1,7 @@
 #include <Arduino.h>
 
 #include "led.h"
+#include "utils.h"
 
 #define LED_HIGH (mosfet_type == LED_NMOS ? HIGH : LOW)
 #define LED_LOW  (mosfet_type == LED_NMOS ? LOW : HIGH)
@@ -36,6 +37,7 @@ static bool indicate_left_changed = false;
 static bool indicate_right_changed = false;
 static bool brakelight_changed = false;
 static bool headlight_changed = false;
+static bool all_changed = false;
 
 /**
  * LED PIN ARRAYS:
@@ -204,7 +206,7 @@ ISR(TIMER1_COMPA_vect)
 //  }
   
   // handle the headlight pins
-  if (headlight_changed || headlight) {
+  if (headlight_changed || headlight || all_changed) {
     for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
       digitalWrite(headlight_pins[i], LED_PWM_OUTPUT(headlight));
     }
@@ -212,7 +214,7 @@ ISR(TIMER1_COMPA_vect)
   }
 
   // handle the brakelight pins
-  if (brakelight_changed || brakelight) {
+  if (brakelight_changed || brakelight || all_changed) {
     for (i = 0; i < PINS_BRAKELIGHT_LEN; i++) {
       digitalWrite(brakelight_pins[i], LED_PWM_OUTPUT(brakelight));
     }
@@ -220,7 +222,7 @@ ISR(TIMER1_COMPA_vect)
   }
 
   // TODO: handle the indicate left pin frequency and duty cycle
-  if (indicate_left_changed || indicate_left) {
+  if (indicate_left_changed || indicate_left || all_changed) {
     for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {
       digitalWrite(indicate_left_pins[i], LED_PWM_OUTPUT(indicate_left));
     }
@@ -228,7 +230,7 @@ ISR(TIMER1_COMPA_vect)
   }
 
   // TODO: handle the indicate right pin frequency and duty cycle
-  if (indicate_right_changed || indicate_right) {
+  if (indicate_right_changed || indicate_right || all_changed) {
     for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
       digitalWrite(indicate_right_pins[i], LED_PWM_OUTPUT(indicate_right));
     }
@@ -236,6 +238,7 @@ ISR(TIMER1_COMPA_vect)
   }
 
   timer_count++;
+  all_changed = false;
 }
 
 void led_init(led_mosfet_type type)
@@ -264,6 +267,10 @@ void led_init(led_mosfet_type type)
     pinMode(brakelight_pins[i], OUTPUT);
   }
 
+  all_changed = true;
+
+  led_force_all_off();
+
   // initialise the ISR
   noInterrupts();
 
@@ -278,14 +285,14 @@ void led_init(led_mosfet_type type)
   interrupts();
 }
 
-void led_force_all_on(bool is_rear)
+void led_force_all_on()
 {
   int i;
   for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
     digitalWrite(headlight_pins[i], LED_HIGH);
   }
 
-  if (is_rear) {
+  if (utils_is_rear_module()) {
     for (i = 0; i < PINS_BRAKELIGHT_LEN; i++) {
       digitalWrite(brakelight_pins[i], LED_HIGH);
     }
@@ -297,6 +304,28 @@ void led_force_all_on(bool is_rear)
 
   for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
     digitalWrite(indicate_right_pins[i], LED_HIGH);
+  }
+}
+
+void led_force_all_off()
+{
+  int i;
+  for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
+    digitalWrite(headlight_pins[i], LED_LOW);
+  }
+
+  if (utils_is_rear_module()) {
+    for (i = 0; i < PINS_BRAKELIGHT_LEN; i++) {
+      digitalWrite(brakelight_pins[i], LED_LOW);
+    }
+  } else {
+    for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {
+      digitalWrite(indicate_left_pins[i], LED_LOW);
+    }
+  }
+
+  for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
+    digitalWrite(indicate_right_pins[i], LED_LOW);
   }
 }
 
