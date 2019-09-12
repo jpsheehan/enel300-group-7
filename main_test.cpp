@@ -11,7 +11,10 @@ void main_test_one(void)
   unsigned long now, then = 0;
 
   if (utils_is_front_module()) {
+    Serial.println("Module is configured as front bike light.");
     led_headlight_on();
+  } else {
+    Serial.println("Module is configured as rear bike light.");
   }
 
   while (true) {
@@ -21,13 +24,13 @@ void main_test_one(void)
     if (now - then >= 200) {
       accel_update();
       
-      if (accel_get_is_leaning_left()) {
+      if (accel_get_is_leaning_left() && accel_get_is_upright()) {
         led_indicate_left_on();
       } else {
         led_indicate_left_off();
       }
 
-      if (accel_get_is_leaning_right()) {
+      if (accel_get_is_leaning_right() && accel_get_is_upright()) {
         led_indicate_right_on();
       } else {
         led_indicate_right_off();

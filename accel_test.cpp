@@ -118,3 +118,45 @@ void accel_test_five(void)
     }
   }
 }
+
+void accel_test_six(void)
+{
+  unsigned long now, then = 0;
+
+  while (true) {
+    now = millis();
+    accel_update();
+
+    if (now - then >= 200) {
+      Serial.print(accel_get_gyro_x());
+      Serial.print("\t");
+      Serial.print(accel_get_gyro_y());
+      Serial.print("\t");
+      Serial.println(accel_get_gyro_z());
+
+      then = now;
+    }
+  }
+}
+
+void accel_test_seven(void)
+{
+  unsigned long now, then = 0;
+
+  while (true) {
+    now = millis();
+    accel_update();
+
+    if (now - then >= 200) {
+      Serial.print(accel_get_acc_z());
+      Serial.print("\t");
+      Serial.print(accel_get_acc_angle_x() + 180.0f);
+      Serial.print("\t");
+      Serial.print(sin(accel_get_acc_angle_x()) * accel_get_acc_angle_x());
+      Serial.print("\t");
+      Serial.println(accel_get_acc_z() + cos(accel_get_acc_angle_x()));
+
+      then = now;
+    }
+  }
+}

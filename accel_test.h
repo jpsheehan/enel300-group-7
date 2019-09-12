@@ -26,4 +26,14 @@ void accel_test_four(void);
  */
 void accel_test_five(void);
 
+/**
+ * Dumps the gyro information for the serial plotter.
+ */
+void accel_test_six(void);
+
+/**
+ * Dumps the normalised acceleration information.
+ */
+void accel_test_seven(void);
+
 #endif

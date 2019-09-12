@@ -236,6 +236,8 @@ ISR(TIMER1_COMPA_vect)
 
 void led_init(led_mosfet_type type)
 {
+  Serial.print("Initialising LED module... ");
+  
   int i;
 
   mosfet_type = type;
@@ -276,6 +278,8 @@ void led_init(led_mosfet_type type)
   TIMSK1 |= (1 << OCIE1A);  
   
   interrupts();
+
+  Serial.println("Done!");
 }
 
 void led_force_all_on(void)

@@ -3,6 +3,12 @@
 
 #include <stdbool.h>
 
+//#include "hardware.h"
+
+//#define UTILS_PRINT_DBG(str) #if IS_DBG \
+//  Serial.print(str) \
+//#endif
+
 /**
  * Returns true if this is a rear module.
  */

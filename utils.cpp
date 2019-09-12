@@ -15,5 +15,9 @@ bool utils_is_front_module(void)
 
 void utils_init(void)
 {
+  Serial.print("Initialising utils module... ");
+  
   pinMode(PIN_IS_REAR, INPUT_PULLUP);
+
+  Serial.println("Done!");
 }

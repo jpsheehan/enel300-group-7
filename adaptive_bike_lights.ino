@@ -40,4 +40,5 @@ void setup() {
 
 void loop() {
   main_test_one();
+//  accel_test_seven();
 }

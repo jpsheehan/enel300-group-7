@@ -45,6 +45,13 @@ float accel_get_angle_y(void);
 
 float accel_get_angle_z(void);
 
+//float accel_get_normalised_acc_z(void);
+
+/**
+ * Returns true if the module is laying flat.
+ */
+//bool accel_get_is_laying_flat(void);
+
 /**
  * Returns true if the module is leaning left (>= 45 degrees).
  */
