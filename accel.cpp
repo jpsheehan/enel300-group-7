@@ -89,17 +89,22 @@ float accel_get_angle_z(void)
   return mpu6050.getAngleZ();
 }
 
-bool accel_get_leaning_left(void)
+bool accel_get_is_leaning_left(void)
 {
   return accel_get_acc_x() > 0.5;
 }
 
-bool accel_get_leaning_right(void)
+bool accel_get_is_leaning_right(void)
 {
   return accel_get_acc_x() < -0.5;
 }
 
-bool accel_get_stopping(void)
+bool accel_get_is_stopping(void)
 {
   return accel_get_acc_z() < -0.5;
+}
+
+bool accel_get_is_upright(void)
+{
+  return -135.0f <= accel_get_acc_angle_x() && accel_get_acc_angle_x() <= -45.0f;
 }

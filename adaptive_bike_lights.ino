@@ -14,6 +14,7 @@
 #include "led.h"
 #include "utils.h"
 
+#include "accel_test.h"
 #include "main_test.h"
 
 void setup() {

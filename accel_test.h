@@ -11,4 +11,19 @@ void accel_test_one(void);
  */
 void accel_test_two(void);
 
+/**
+ * Dumps the angle information for the serial plotter.
+ */
+void accel_test_three(void);
+
+/**
+ * Dumps the gyro angle information for the serial plotter.
+ */
+void accel_test_four(void);
+
+/**
+ * Dumps the accelerometer angle information for the serial plotter.
+ */
+void accel_test_five(void);
+
 #endif

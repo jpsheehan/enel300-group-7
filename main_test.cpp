@@ -8,7 +8,7 @@
 
 void main_test_one(void)
 {
-  unsigned long now, then;
+  unsigned long now, then = 0;
 
   while (true) {
     // update the accelerometer every 200 ms
@@ -16,22 +16,21 @@ void main_test_one(void)
 
     if (now - then >= 200) {
       accel_update();
-      Serial.println("Updated!");
-
-      if (accel_get_leaning_left()) {
+      
+      if (accel_get_is_leaning_left()) {
         led_indicate_left_on();
       } else {
         led_indicate_left_off();
       }
 
-      if (accel_get_leaning_right()) {
+      if (accel_get_is_leaning_right()) {
         led_indicate_right_on();
       } else {
         led_indicate_right_off();
       }
 
       if (utils_is_rear_module()) {
-        if (accel_get_stopping()) {
+        if (accel_get_is_stopping() && accel_get_is_upright()) {
           led_brakelight_on();
         } else {
           led_brakelight_off();

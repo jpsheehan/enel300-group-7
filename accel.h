@@ -45,10 +45,24 @@ float accel_get_angle_y(void);
 
 float accel_get_angle_z(void);
 
-bool accel_get_leaning_left(void);
+/**
+ * Returns true if the module is leaning left (>= 45 degrees).
+ */
+bool accel_get_is_leaning_left(void);
 
-bool accel_get_leaning_right(void);
+/**
+ * Returns true if the module is leaning right (>= 45 degrees).
+ */
+bool accel_get_is_leaning_right(void);
 
-bool accel_get_stopping(void);
+/**
+ * Returns true if the module is decelerating.
+ */
+bool accel_get_is_stopping(void);
+
+/**
+ * Returns true if the module is upright (+/- 45 degrees).
+ */
+bool accel_get_is_upright(void);
 
 #endif
