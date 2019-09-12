@@ -5,6 +5,8 @@
 #include "accel.h"
 #include "hardware.h"
 
+#define LEAN_ANGLE(angle) ((angle) / 90.0f)
+
 MPU6050 mpu6050(Wire);
 
 void accel_init(void)
@@ -89,14 +91,18 @@ float accel_get_angle_z(void)
   return mpu6050.getAngleZ();
 }
 
+/**
+ * Business Logic:
+ */
+
 bool accel_get_is_leaning_left(void)
 {
-  return accel_get_acc_x() > 0.5;
+  return accel_get_acc_x() > LEAN_ANGLE(30);
 }
 
 bool accel_get_is_leaning_right(void)
 {
-  return accel_get_acc_x() < -0.5;
+  return accel_get_acc_x() < LEAN_ANGLE(-30);
 }
 
 bool accel_get_is_stopping(void)

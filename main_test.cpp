@@ -10,6 +10,10 @@ void main_test_one(void)
 {
   unsigned long now, then = 0;
 
+  if (utils_is_front_module()) {
+    led_headlight_on();
+  }
+
   while (true) {
     // update the accelerometer every 200 ms
     now = millis();

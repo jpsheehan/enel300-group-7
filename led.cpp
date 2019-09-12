@@ -6,7 +6,6 @@
 #define LED_HIGH (mosfet_type == LED_NMOS ? HIGH : LOW)
 #define LED_LOW  (mosfet_type == LED_NMOS ? LOW : HIGH)
 #define LED_PWM_OUTPUT(var) (((var) && (timer_count % 2 == 0)) ? LED_HIGH : LED_LOW)
-//#define LED_PWM_OUTPUT_PULSE(var, pulse) (((var) && (pulse) && (timer_count % 2 == 0)) ? LED_HIGH : LED_LOW)
 
 /**
  * LIGHT FLAGS:
