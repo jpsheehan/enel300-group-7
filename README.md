@@ -5,8 +5,8 @@
 A group project for ENEL300 2019 S2.
 
 ## Features to Implement:
-- Automatic flashing of indicator lights at 2 Hz.
-- Automatic flashing of headlights at 5 Hz.
+- ~~Automatic flashing of indicator lights at 1.75 Hz.~~
+- ~~Automatic flashing of headlights at 10 Hz.~~
 - ~~Get proper readings from accelerometer.~~
 - ~~Add some visual feedback for when the accelerometer is calibrating.~~
 

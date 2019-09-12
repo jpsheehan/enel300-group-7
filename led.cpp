@@ -215,7 +215,7 @@ ISR(TIMER1_COMPA_vect)
     brakelight_changed = false;
   }
 
-  // TODO: handle the indicate left pin frequency and duty cycle
+  // handle the indicate left pins
   if (indicate_left_changed || indicate_left || all_changed) {
     for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {
       digitalWrite(indicate_left_pins[i], LED_PWM_OUTPUT(indicate_left && indicate_pulse));
@@ -223,7 +223,7 @@ ISR(TIMER1_COMPA_vect)
     indicate_left_changed = false;
   }
 
-  // TODO: handle the indicate right pin frequency and duty cycle
+  // handle the indicate right pins
   if (indicate_right_changed || indicate_right || all_changed) {
     for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
       digitalWrite(indicate_right_pins[i], LED_PWM_OUTPUT(indicate_right && indicate_pulse));
