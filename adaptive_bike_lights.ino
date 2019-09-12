@@ -28,8 +28,13 @@ void setup() {
   // setup the led module
   led_init(LED_PMOS);
 
+  // give some visual feedback while calibrating the accelerometer
+  led_hazard_on();
+
   // setup the accelerometer module
   accel_init();
+
+  led_hazard_off();
 }
 
 void loop() {

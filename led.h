@@ -98,11 +98,21 @@ void led_knightrider(int delay_ms);
 /**
  * Forces all LEDs on with 100% duty.
  */
-void led_force_all_on();
+void led_force_all_on(void);
 
 /**
  * Forces all LEDs off.
  */
-void led_force_all_off();
+void led_force_all_off(void);
+
+/**
+ * Turns the hazard lights on.
+ */
+void led_hazard_on(void);
+
+/**
+ * Turns the hazard lights off.
+ */
+void led_hazard_off(void);
 
 #endif

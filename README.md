@@ -8,7 +8,9 @@ A group project for ENEL300 2019 S2.
 - Automatic flashing of indicator lights at 2 Hz.
 - Automatic flashing of headlights at 5 Hz.
 - ~~Get proper readings from accelerometer.~~
+- ~~Add some visual feedback for when the accelerometer is calibrating.~~
 
 ## Bugs to Fix:
 - ~~Make the `accel_is_stopping` function return false if it is sitting facedown/faceup on a table.~~
+- Make the `accel_is_stopping` function work properly on front modules.
 

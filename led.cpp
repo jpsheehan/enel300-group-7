@@ -16,6 +16,7 @@ static bool indicate_right = false;
 static bool brakelight = false;
 static bool headlight = false;
 
+
 /**
  * PULSE FLAGS:
  */
@@ -37,6 +38,7 @@ static bool indicate_left_changed = false;
 static bool indicate_right_changed = false;
 static bool brakelight_changed = false;
 static bool headlight_changed = false;
+static bool hazard_changed = false;
 static bool all_changed = false;
 
 /**
@@ -65,7 +67,7 @@ static const int led_pwm_value = 2500; // = F_CPU / (led_pwm_freq * led_pwm_pres
 
 static led_mosfet_type mosfet_type;
 
-static unsigned long timer_count = 0;
+static unsigned timer_count = 0;
 
 void led_knightrider(int delay_ms)
 {  
@@ -193,7 +195,7 @@ bool led_is_headlight_on(void)
 ISR(TIMER1_COMPA_vect)
 {
   int i;
-
+  
   // handle the pulse stuff
 //  if (brakelight) {
 //    if (brakelight_changed) {
@@ -236,9 +238,9 @@ ISR(TIMER1_COMPA_vect)
     }
     indicate_right_changed = false;
   }
-
-  timer_count++;
+  
   all_changed = false;
+  timer_count++;
 }
 
 void led_init(led_mosfet_type type)
@@ -285,7 +287,7 @@ void led_init(led_mosfet_type type)
   interrupts();
 }
 
-void led_force_all_on()
+void led_force_all_on(void)
 {
   int i;
   for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
@@ -307,7 +309,7 @@ void led_force_all_on()
   }
 }
 
-void led_force_all_off()
+void led_force_all_off(void)
 {
   int i;
   for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
@@ -327,6 +329,30 @@ void led_force_all_off()
   for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
     digitalWrite(indicate_right_pins[i], LED_LOW);
   }
+}
+
+void led_hazard_on(void)
+{
+  noInterrupts();
+  
+  indicate_left = true;
+  indicate_left_changed = true;
+  indicate_right = true;
+  indicate_right_changed = true;
+
+  interrupts();
+}
+
+void led_hazard_off(void)
+{
+  noInterrupts();
+  
+  indicate_left = false;
+  indicate_left_changed = true;
+  indicate_right = false;
+  indicate_right_changed = true;
+
+  interrupts();
 }
 
 // undefine the macros so we don't pollute the macro table
