@@ -249,7 +249,7 @@ ISR(TIMER1_COMPA_vect)
 
 void led_init(led_mosfet_type type)
 {
-  Serial.print("Initialising LED module... ");
+  UTILS_PRINT_DBG("Initialising LED module... ");
   
   int i;
 
@@ -292,7 +292,7 @@ void led_init(led_mosfet_type type)
   
   interrupts();
 
-  Serial.println("Done!");
+  UTILS_PRINTLN_DBG("Done!");
 }
 
 void led_force_all_on(void)

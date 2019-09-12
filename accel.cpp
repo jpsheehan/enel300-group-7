@@ -19,13 +19,13 @@ MPU6050 mpu6050(Wire);
 
 void accel_init(void)
 {
-  Serial.print("Initialising accelerometer module... ");
+  UTILS_PRINT_DBG("Initialising accelerometer module... ");
   
   Wire.begin();
   mpu6050.begin();
   mpu6050.calcGyroOffsets();
 
-  Serial.println("Done!");
+  UTILS_PRINTLN_DBG("Done!");
 }
 
 void accel_update(void)

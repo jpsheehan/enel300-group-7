@@ -20,6 +20,8 @@
 
 #define PIN_LED_BUILTIN 13
 
+#define IS_DBG true
+
 /*
  * OTHER DEFINITIONS
  */
