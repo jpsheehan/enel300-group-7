@@ -27,7 +27,7 @@ void setup() {
   utils_init();
 
   // setup the led module
-  led_init(LED_NMOS);
+  led_init(LED_PMOS);
 
   // give some visual feedback while calibrating the accelerometer
   led_hazard_on();
@@ -41,5 +41,5 @@ void setup() {
 void loop() {
 //  main_test_one();
 //  led_test_one();
-  led_test_two();
+  led_test_three();
 }

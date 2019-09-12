@@ -20,16 +20,14 @@ static bool headlight = false;
 /**
  * PULSE FLAGS:
  */
-//static bool indicate_pulse = false;
-//static bool headlight_pulse = false;
-//static bool brakelight_pulse = false;
+static bool indicate_pulse = false;
+static bool headlight_pulse = false;
 
 /**
  * PULSE FREQUENCIES:
  */
-//static const int indicate_freq = 2;
-//static const int brakelight_freq = 5;
-//static const int headlight_freq = 5;
+static const float indicate_freq = 1.75f;
+static const float headlight_freq = 10.0f;
 
 /**
  * LIGHT CHANGED FLAGS:
@@ -57,13 +55,6 @@ static const int indicate_right_pins[PINS_INDICATE_RIGHT_LEN] = { PINS_INDICATE_
 static const int led_pwm_freq = 50; // Hz (the actual timer frequency will be twice this)
 static const int led_pwm_prescaler = 64;
 static const int led_pwm_value = 2500; // = F_CPU / (led_pwm_freq * led_pwm_prescaler * 2)
-
-/**
- * PULSE START VARIABLES:
- */
-//static unsigned long indicate_pulse_start;
-//static unsigned long brakelight_pulse_start;
-//static unsigned long headlight_pulse_start;
 
 static led_mosfet_type mosfet_type;
 
@@ -195,22 +186,23 @@ bool led_is_headlight_on(void)
 ISR(TIMER1_COMPA_vect)
 {
   int i;
-  
-  // handle the pulse stuff
-//  if (brakelight) {
-//    if (brakelight_changed) {
-//      brakelight_pulse_start = timer_count;
-//    } else {
-//       if (((timer_count - brakelight_pulse_start) % (2 * brakelight_freq)) == 0) {
-//        brakelight_pulse = !brakelight_pulse;
-//      }
-//    }
-//  }
+
+  // indicator pulsing
+  if (timer_count % (int)((2 * led_pwm_freq) / indicate_freq) == 0) {
+    indicate_pulse = !indicate_pulse;
+    indicate_left_changed = true;
+    indicate_right_changed = true;
+  }
+
+  if (timer_count % (int)((2 * led_pwm_freq) / headlight_freq) == 0) {
+    headlight_pulse = !headlight_pulse;
+    headlight_changed = true;
+  }
   
   // handle the headlight pins
   if (headlight_changed || headlight || all_changed) {
     for (i = 0; i < PINS_HEADLIGHT_LEN; i++) {
-      digitalWrite(headlight_pins[i], LED_PWM_OUTPUT(headlight));
+      digitalWrite(headlight_pins[i], LED_PWM_OUTPUT(headlight && headlight_pulse));
     }
     headlight_changed = false;
   }
@@ -226,7 +218,7 @@ ISR(TIMER1_COMPA_vect)
   // TODO: handle the indicate left pin frequency and duty cycle
   if (indicate_left_changed || indicate_left || all_changed) {
     for (i = 0; i < PINS_INDICATE_LEFT_LEN; i++) {
-      digitalWrite(indicate_left_pins[i], LED_PWM_OUTPUT(indicate_left));
+      digitalWrite(indicate_left_pins[i], LED_PWM_OUTPUT(indicate_left && indicate_pulse));
     }
     indicate_left_changed = false;
   }
@@ -234,7 +226,7 @@ ISR(TIMER1_COMPA_vect)
   // TODO: handle the indicate right pin frequency and duty cycle
   if (indicate_right_changed || indicate_right || all_changed) {
     for (i = 0; i < PINS_INDICATE_RIGHT_LEN; i++) {
-      digitalWrite(indicate_right_pins[i], LED_PWM_OUTPUT(indicate_right));
+      digitalWrite(indicate_right_pins[i], LED_PWM_OUTPUT(indicate_right && indicate_pulse));
     }
     indicate_right_changed = false;
   }

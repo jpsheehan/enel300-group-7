@@ -63,13 +63,16 @@ void led_test_two(void)
 
 void led_test_three(void)
 {
-    if (utils_is_front_module()) {
-        led_headlight_on();
-    } else {
-        led_brakelight_on();
-    }
+  led_indicate_left_on();
+  led_indicate_right_on();
+  
+  if (utils_is_front_module()) {
+      led_headlight_on();
+  } else {
+      led_brakelight_on();
+  }
 
-    while (true) { continue; }
+  while (true) { continue; }
 }
 
 void led_test_four(void)
