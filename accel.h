@@ -12,8 +12,35 @@ void accel_init(void);
 void accel_update(void);
 
 /**
- * Writes all the data from the accelerometer to the serial port.
+ * TODO: Comment all of the following please.
  */
-void accel_dump(void);
+
+float accel_get_acc_x(void);
+
+float accel_get_acc_y(void);
+
+float accel_get_acc_z(void);
+
+float accel_get_gyro_x(void);
+
+float accel_get_gyro_y(void);
+
+float accel_get_gyro_z(void);
+
+float accel_get_acc_angle_x(void);
+
+float accel_get_acc_angle_y(void);
+
+float accel_get_gyro_angle_x(void);
+
+float accel_get_gyro_angle_y(void);
+
+float accel_get_gyro_angle_z(void);
+
+float accel_get_angle_x(void);
+
+float accel_get_angle_y(void);
+
+float accel_get_angle_z(void);
 
 #endif

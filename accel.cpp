@@ -19,27 +19,72 @@ void accel_update(void)
   mpu6050.update();
 }
 
-void accel_dump(void)
+float accel_get_acc_x(void)
 {
-  Serial.println("=======================================================");
-  Serial.print("temp : ");Serial.println(mpu6050.getTemp());
-  Serial.print("accX : ");Serial.print(mpu6050.getAccX());
-  Serial.print("\taccY : ");Serial.print(mpu6050.getAccY());
-  Serial.print("\taccZ : ");Serial.println(mpu6050.getAccZ());
+  return mpu6050.getAccX();
+}
 
-  Serial.print("gyroX : ");Serial.print(mpu6050.getGyroX());
-  Serial.print("\tgyroY : ");Serial.print(mpu6050.getGyroY());
-  Serial.print("\tgyroZ : ");Serial.println(mpu6050.getGyroZ());
+float accel_get_acc_y(void)
+{
+  return mpu6050.getAccY();
+}
 
-  Serial.print("accAngleX : ");Serial.print(mpu6050.getAccAngleX());
-  Serial.print("\taccAngleY : ");Serial.println(mpu6050.getAccAngleY());
+float accel_get_acc_z(void)
+{
+  return mpu6050.getAccZ();
+}
 
-  Serial.print("gyroAngleX : ");Serial.print(mpu6050.getGyroAngleX());
-  Serial.print("\tgyroAngleY : ");Serial.print(mpu6050.getGyroAngleY());
-  Serial.print("\tgyroAngleZ : ");Serial.println(mpu6050.getGyroAngleZ());
-  
-  Serial.print("angleX : ");Serial.print(mpu6050.getAngleX());
-  Serial.print("\tangleY : ");Serial.print(mpu6050.getAngleY());
-  Serial.print("\tangleZ : ");Serial.println(mpu6050.getAngleZ());
-  Serial.println("=======================================================\n");
+float accel_get_gyro_x(void)
+{
+  return mpu6050.getGyroX();
+}
+
+float accel_get_gyro_y(void)
+{
+  return mpu6050.getGyroY();
+}
+
+float accel_get_gyro_z(void)
+{
+  return mpu6050.getGyroZ();
+}
+
+float accel_get_acc_angle_x(void)
+{
+  return mpu6050.getAccAngleX();
+}
+
+float accel_get_acc_angle_y(void)
+{
+  return mpu6050.getAccAngleY();
+}
+
+float accel_get_gyro_angle_x(void)
+{
+  return mpu6050.getGyroAngleX();
+}
+
+float accel_get_gyro_angle_y(void)
+{
+  return mpu6050.getGyroAngleY();
+}
+
+float accel_get_gyro_angle_z(void)
+{
+  return mpu6050.getGyroAngleZ();
+}
+
+float accel_get_angle_x(void)
+{
+  return mpu6050.getAngleX();
+}
+
+float accel_get_angle_y(void)
+{
+  return mpu6050.getAngleY();
+}
+
+float accel_get_angle_z(void)
+{
+  return mpu6050.getAngleZ();
 }
