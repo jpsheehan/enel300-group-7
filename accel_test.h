@@ -6,4 +6,9 @@
  */
 void accel_test_one(void);
 
+/**
+ * Dumps the acceleration information for the serial plotter.
+ */
+void accel_test_two(void);
+
 #endif

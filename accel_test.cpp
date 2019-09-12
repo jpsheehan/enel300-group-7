@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <stdbool.h>
 
 #include "accel.h"
 #include "accel_test.h"
@@ -37,4 +38,25 @@ void accel_test_one(void)
       then = now;
     }
   }
+}
+
+void accel_test_two(void)
+{
+  unsigned long now, then;
+
+  while (true) {
+    now = millis();
+    accel_update();
+
+    if (now - then > 200) {
+      Serial.print(accel_get_acc_x());
+      Serial.print(" ");
+      Serial.print(accel_get_acc_y());
+      Serial.print(" ");
+      Serial.println(accel_get_acc_z());
+
+      then = now;
+    }
+  }
+  
 }

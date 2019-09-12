@@ -32,5 +32,5 @@ void setup() {
 }
 
 void loop() {
-  accel_test_one();
+  accel_test_two();
 }
