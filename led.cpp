@@ -55,9 +55,13 @@ static const int led_pwm_freq = 50; // Hz (the actual timer frequency will be tw
 static const int led_pwm_prescaler = 64;
 static const int led_pwm_value = 2500; // = F_CPU / (led_pwm_freq * led_pwm_prescaler * 2)
 
+static const unsigned long brakelight_delay = 1000;
+
 static led_mosfet_type mosfet_type;
 
 static unsigned timer_count = 0;
+
+static unsigned long brakelight_start = 0;
 
 void led_knightrider(int delay_ms)
 {  
@@ -145,6 +149,7 @@ void led_brakelight_on(void)
   if (brakelight == false) {
     brakelight_changed = true;
   }
+  brakelight_start = millis();
   brakelight = true;
 }
 
@@ -185,6 +190,7 @@ bool led_is_headlight_on(void)
 ISR(TIMER1_COMPA_vect)
 {
   int i;
+  unsigned long now = millis();
 
   // indicator pulsing
   if (timer_count % (int)((2 * led_pwm_freq) / indicate_freq) == 0) {
@@ -193,9 +199,16 @@ ISR(TIMER1_COMPA_vect)
     indicate_right_changed = true;
   }
 
+  // headlight pulsing
   if (timer_count % (int)((2 * led_pwm_freq) / headlight_freq) == 0) {
     headlight_pulse = !headlight_pulse;
     headlight_changed = true;
+  }
+
+  // brakelight on or off
+  if (brakelight && (now - brakelight_start) >= brakelight_delay) {
+    brakelight = false;
+    brakelight_changed = true;
   }
   
   // handle the headlight pins

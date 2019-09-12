@@ -10,6 +10,8 @@
 #define GET_ACC_VALUE(acc) ((acc) / 9.80f)
 #define MODULE_COEFFICIENT (utils_is_rear_module() ? -1 : 1)
 
+#define NORM_ANGLE(angle) ((angle) < 0 ? (angle) + 360 : (angle))
+
 static const float indicate_angle = 30.0f; // degrees
 static const float min_stopping_acc = 5.0f; // m/s^2
 static const float upright_angle_tolerance = 45.0f; // degrees
@@ -114,12 +116,16 @@ float accel_get_normalised_acc_z(void)
 
 bool accel_get_is_leaning_left(void)
 {
-  return accel_get_acc_angle_y() <= -indicate_angle;
+  float norm_x = NORM_ANGLE(accel_get_acc_angle_x());
+
+  return (norm_x >= 270) && (accel_get_acc_angle_y() <= -indicate_angle);
 }
 
 bool accel_get_is_leaning_right(void)
 {
-  return accel_get_acc_angle_y() >= indicate_angle;
+  float norm_x = NORM_ANGLE(accel_get_acc_angle_x());
+  
+  return (norm_x >= 270) && (accel_get_acc_angle_y() >= indicate_angle);
 }
 
 bool accel_get_is_stopping(void)
