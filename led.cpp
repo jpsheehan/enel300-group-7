@@ -333,26 +333,14 @@ void led_force_all_off(void)
 
 void led_hazard_on(void)
 {
-  noInterrupts();
-  
-  indicate_left = true;
-  indicate_left_changed = true;
-  indicate_right = true;
-  indicate_right_changed = true;
-
-  interrupts();
+  led_indicate_left_on();
+  led_indicate_right_on();
 }
 
 void led_hazard_off(void)
 {
-  noInterrupts();
-  
-  indicate_left = false;
-  indicate_left_changed = true;
-  indicate_right = false;
-  indicate_right_changed = true;
-
-  interrupts();
+  led_indicate_left_off();
+  led_indicate_right_off();
 }
 
 // undefine the macros so we don't pollute the macro table

@@ -14,6 +14,7 @@
 #include "led.h"
 #include "utils.h"
 
+#include "led_test.h"
 #include "accel_test.h"
 #include "main_test.h"
 
@@ -26,7 +27,7 @@ void setup() {
   utils_init();
 
   // setup the led module
-  led_init(LED_PMOS);
+  led_init(LED_NMOS);
 
   // give some visual feedback while calibrating the accelerometer
   led_hazard_on();
@@ -38,5 +39,7 @@ void setup() {
 }
 
 void loop() {
-  main_test_one();
+//  main_test_one();
+//  led_test_one();
+  led_test_two();
 }
