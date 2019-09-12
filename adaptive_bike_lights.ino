@@ -14,14 +14,23 @@
 #include "led.h"
 #include "utils.h"
 
-#include "led_test.h"
+#include "accel_test.h"
 
 void setup() {
-  accel_init();
-  led_init(LED_PMOS);
+
+  // setup the serial port
+  Serial.begin(SERIAL_BAUD_RATE);
+
+  // setup the utilities module
   utils_init();
+
+  // setup the accelerometer module
+  accel_init();
+
+  // setup the led module
+  led_init(LED_PMOS);
 }
 
 void loop() {
-  led_test_five();
+  accel_test_one();
 }
