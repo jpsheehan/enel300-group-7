@@ -10,5 +10,5 @@ A group project for ENEL300 2019 S2.
 - ~~Get proper readings from accelerometer.~~
 
 ## Bugs to Fix:
-- Make the `accel_is_stopping` function return false if it is sitting facedown/faceup on a table.
+- ~~Make the `accel_is_stopping` function return false if it is sitting facedown/faceup on a table.~~
 
