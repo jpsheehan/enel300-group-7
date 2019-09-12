@@ -14,7 +14,7 @@
 #include "led.h"
 #include "utils.h"
 
-static const int update_frequency = 5; // Hz
+static const int update_frequency = 10; // Hz
 
 static unsigned long now, then = 0;
 
@@ -72,7 +72,7 @@ void loop() {
     }
 
     // BRAKING
-    if (utils_is_rear_module() && accel_get_is_stopping() && accel_get_is_upright()) {
+    if (utils_is_rear_module() && accel_get_is_stopping()) {
       led_brakelight_on();
     }
     

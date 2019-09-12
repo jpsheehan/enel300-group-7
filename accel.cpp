@@ -123,7 +123,7 @@ bool accel_get_is_leaning_right(void)
 
 bool accel_get_is_stopping(void)
 {
-  return accel_get_acc_z() < GET_ACC_VALUE(min_stopping_acc) * MODULE_COEFFICIENT;
+  return (accel_get_acc_z() < GET_ACC_VALUE(min_stopping_acc) * MODULE_COEFFICIENT) && accel_get_is_upright();
 }
 
 bool accel_get_is_upright(void)
