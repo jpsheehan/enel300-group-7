@@ -1,6 +1,8 @@
 #ifndef ACCEL_H_
 #define ACCEL_H_
 
+#include <stdbool.h>
+
 /**
  * Initialises the accelerometer.
  */
@@ -42,5 +44,11 @@ float accel_get_angle_x(void);
 float accel_get_angle_y(void);
 
 float accel_get_angle_z(void);
+
+bool accel_get_leaning_left(void);
+
+bool accel_get_leaning_right(void);
+
+bool accel_get_stopping(void);
 
 #endif
