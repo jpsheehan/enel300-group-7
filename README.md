@@ -12,5 +12,5 @@ A group project for ENEL300 2019 S2.
 
 ## Bugs to Fix:
 - ~~Make the `accel_is_stopping` function return false if it is sitting facedown/faceup on a table.~~
-- Make the `accel_is_stopping` function work properly on front modules.
+- ~~Make the `accel_is_stopping` function work properly on front modules.~~
 

@@ -14,13 +14,18 @@ void accel_init(void);
 void accel_update(void);
 
 /**
- * TODO: Comment all of the following please.
+ * Gets the acceleration in the x direction.
  */
-
 float accel_get_acc_x(void);
 
+/**
+ * Gets the acceleration in the y direction.
+ */
 float accel_get_acc_y(void);
 
+/**
+ * Gets the acceleration in the z direction.
+ */
 float accel_get_acc_z(void);
 
 float accel_get_gyro_x(void);
@@ -44,13 +49,6 @@ float accel_get_angle_x(void);
 float accel_get_angle_y(void);
 
 float accel_get_angle_z(void);
-
-//float accel_get_normalised_acc_z(void);
-
-/**
- * Returns true if the module is laying flat.
- */
-//bool accel_get_is_laying_flat(void);
 
 /**
  * Returns true if the module is leaning left (>= 45 degrees).

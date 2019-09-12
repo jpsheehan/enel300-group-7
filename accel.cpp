@@ -6,7 +6,6 @@
 #include "hardware.h"
 #include "utils.h"
 
-#define LEAN_ANGLE(angle) ((angle) / 90.0f)
 #define GET_ACC_VALUE(acc) ((acc) / 9.80f)
 #define MODULE_COEFFICIENT (utils_is_rear_module() ? -1 : 1)
 
@@ -104,12 +103,6 @@ float accel_get_angle_z(void)
   return mpu6050.getAngleZ();
 }
 
-// TODO: return the z acceleration without the gravity component
-float accel_get_normalised_acc_z(void)
-{
-  return accel_get_acc_z();
-}
-
 /**
  * Business Logic:
  */
@@ -133,12 +126,11 @@ bool accel_get_is_stopping(void)
   return accel_get_acc_z() < GET_ACC_VALUE(min_stopping_acc) * MODULE_COEFFICIENT;
 }
 
-//bool accel_get_is_laying_flat(void)
-//{
-//  return (accel_get_acc_angle_x() + 180 >= 180 - flat_angle_tolerance) && (accel_get_acc_angle_x() + 180 <= 180 + flat_angle_tolerance);
-//}
-
 bool accel_get_is_upright(void)
 {
   return (-90.0f - upright_angle_tolerance) <= accel_get_acc_angle_x() && accel_get_acc_angle_x() <= (-90.0f + upright_angle_tolerance);
 }
+
+#undef NORM_ANGLE
+#undef GET_ACC_VALUE
+#undef MODULE_COEFFICIENT

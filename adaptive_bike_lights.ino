@@ -14,9 +14,9 @@
 #include "led.h"
 #include "utils.h"
 
-#include "led_test.h"
-#include "accel_test.h"
-#include "main_test.h"
+static const int update_frequency = 5; // Hz
+
+static unsigned long now, then = 0;
 
 void setup() {
 
@@ -35,10 +35,47 @@ void setup() {
   // setup the accelerometer module
   accel_init();
 
+  // turn off the hazard lights
   led_hazard_off();
+
+  // print some information to the serial port
+  if (utils_is_front_module()) {
+    Serial.println("Module is configured as front bike light.");
+  } else {
+    Serial.println("Module is configured as rear bike light.");
+  }
+  
+  Serial.println("Running main loop...");
+
+  // turn the "headlight" on (this is the brakelight on the rear module)
+  led_headlight_on();
 }
 
 void loop() {
-  main_test_one();
-//  accel_test_five();
+  now = millis();
+
+  if (now - then >= 1000.0f / update_frequency) {
+    accel_update();
+
+    // LEFT LEAN
+    if (accel_get_is_leaning_left()) {
+      led_indicate_left_on();
+    } else {
+      led_indicate_left_off();
+    }
+
+    // RIGHT LEAN
+    if (accel_get_is_leaning_right()) {
+      led_indicate_right_on();
+    } else {
+      led_indicate_right_off();
+    }
+
+    // BRAKING
+    if (utils_is_rear_module() && accel_get_is_stopping() && accel_get_is_upright()) {
+      led_brakelight_on();
+    }
+    
+    then = now;
+  }
 }
